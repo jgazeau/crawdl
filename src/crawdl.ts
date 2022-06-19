@@ -6,7 +6,7 @@ import {CrawdlCli} from './cli/crawdlCli';
 import {DlFile} from './model/entity/dlFile';
 import {headerFactory} from './utils/helpers';
 import {CrawdlError} from './model/crawdlError';
-import {Onefichier} from './model/host/onefichier';
+import {OneFichier} from './model/host/oneFichier';
 import {ICliArguments} from './cli/iArgumentsParser';
 import {DlFileService} from './service/dlFileService';
 import {IHostWebsite} from './model/host/iHostWebsite';
@@ -19,7 +19,7 @@ export class Crawdl {
       return dlFileService
         .initialize()
         .then(() => {
-          const host = new Onefichier();
+          const host = new OneFichier();
           return processRandomUrlOnHost(
             host,
             cliArgs.processIteration,

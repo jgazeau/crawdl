@@ -1,7 +1,7 @@
 import {expect} from 'chai';
 import {DlFile} from '../../src/model/entity/dlFile';
 import {setChaiAsPromised} from '../testUtils/helpers';
-import {Onefichier} from '../../src/model/host/onefichier';
+import {OneFichier} from '../../src/model/host/oneFichier';
 import {
   ONEFICHIER_ERROR_DATE,
   ONEFICHIER_ERROR_NAME,
@@ -28,12 +28,12 @@ describe('1fichier tests', () => {
   });
   it('getRandomDlUrl should return a random download URL', () => {
     setChaiAsPromised();
-    const onefichier = new Onefichier();
+    const onefichier = new OneFichier();
     return onefichier.randomDlUrl().then(url => {
       expect(url).to.be.instanceOf(URL);
       expect(url.toString()).to.match(
         new RegExp(
-          `${Onefichier.HOST_URL}/\\?[a-z0-9]{${Onefichier.FILE_PATH_CHAR_LENGTH}}`
+          `${OneFichier.HOST_URL}/\\?[a-z0-9]{${OneFichier.FILE_PATH_CHAR_LENGTH}}`
         )
       );
     });
@@ -41,7 +41,7 @@ describe('1fichier tests', () => {
   it('getDlFile should return a file', () => {
     setChaiAsPromised();
     setAxiosStub('get', [new AxiosMethodStub(TEST_FILE_URL, ONEFICHIER_OK)]);
-    const onefichier = new Onefichier();
+    const onefichier = new OneFichier();
     return onefichier.processDlFile(new URL(TEST_FILE_URL)).then(file => {
       expect(file).to.be.instanceOf(DlFile);
       expect((file as DlFile).status).to.be.equal(DlFileStatus.available);
@@ -50,7 +50,7 @@ describe('1fichier tests', () => {
   it('getDlFile should return a file when request return 404', () => {
     setChaiAsPromised();
     setAxiosStub('get', [new AxiosMethodStub(TEST_FILE_URL, '', 404)]);
-    const onefichier = new Onefichier();
+    const onefichier = new OneFichier();
     return onefichier.processDlFile(new URL(TEST_FILE_URL)).then(file => {
       expect(file).to.be.instanceOf(DlFile);
       expect((file as DlFile).status).to.be.equal(DlFileStatus.unavailable);
@@ -62,7 +62,7 @@ describe('1fichier tests', () => {
     setAxiosStub('get', [
       new AxiosMethodStub(TEST_FILE_URL, '', errorHttpStatus),
     ]);
-    const onefichier = new Onefichier();
+    const onefichier = new OneFichier();
     return onefichier
       .processDlFile(new URL(TEST_FILE_URL))
       .then(errorString => {
@@ -76,7 +76,7 @@ describe('1fichier tests', () => {
     setAxiosStub('get', [
       new AxiosMethodStub(TEST_FILE_URL, ONEFICHIER_ERROR_NAME),
     ]);
-    const onefichier = new Onefichier();
+    const onefichier = new OneFichier();
     return onefichier.processDlFile(new URL(TEST_FILE_URL)).then(file => {
       expect(file).to.be.instanceOf(DlFile);
       expect((file as DlFile).status).to.be.equal(DlFileStatus.extractFailure);
@@ -87,7 +87,7 @@ describe('1fichier tests', () => {
     setAxiosStub('get', [
       new AxiosMethodStub(TEST_FILE_URL, ONEFICHIER_ERROR_DATE),
     ]);
-    const onefichier = new Onefichier();
+    const onefichier = new OneFichier();
     return onefichier.processDlFile(new URL(TEST_FILE_URL)).then(file => {
       expect(file).to.be.instanceOf(DlFile);
       expect((file as DlFile).status).to.be.equal(DlFileStatus.extractFailure);
@@ -98,7 +98,7 @@ describe('1fichier tests', () => {
     setAxiosStub('get', [
       new AxiosMethodStub(TEST_FILE_URL, ONEFICHIER_ERROR_SIZE),
     ]);
-    const onefichier = new Onefichier();
+    const onefichier = new OneFichier();
     return onefichier.processDlFile(new URL(TEST_FILE_URL)).then(file => {
       expect(file).to.be.instanceOf(DlFile);
       expect((file as DlFile).status).to.be.equal(DlFileStatus.extractFailure);

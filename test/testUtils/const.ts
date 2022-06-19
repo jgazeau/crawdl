@@ -5,7 +5,7 @@ import {TLogLevelName} from 'tslog';
 import {Host} from '../../src/model/host/host';
 import {DlFile} from '../../src/model/entity/dlFile';
 import {DlFileStatus} from '../../src/model/dlFileStatus';
-import {Onefichier} from '../../src/model/host/onefichier';
+import {OneFichier} from '../../src/model/host/oneFichier';
 import {ICliArguments} from '../../src/cli/iArgumentsParser';
 import {
   DEFAULT_MONGO_PROTOCOL,
@@ -68,7 +68,7 @@ export function containerCliArgs(mappedPort: number): ICliArguments {
   };
 }
 export const DUMMY_DL_FILE: DlFile = new DlFile(
-  Onefichier.HOST,
+  OneFichier.HOST,
   new URL('http://test.com/xxxxx'),
   DlFileStatus.available,
   new Date(),

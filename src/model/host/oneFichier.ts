@@ -10,7 +10,7 @@ import {DlFileStatus} from '../dlFileStatus';
 import {randomString} from '../../utils/helpers';
 import axios, {AxiosError, AxiosResponse} from 'axios';
 
-export class Onefichier implements IHostWebsite {
+export class OneFichier implements IHostWebsite {
   static readonly HOST: Host = Host.onefichier;
   static readonly HOST_URL: string = 'https://1fichier.com';
   static readonly FILE_PATH_CHAR_LENGTH: number = 20;
@@ -27,8 +27,8 @@ export class Onefichier implements IHostWebsite {
   randomDlUrl(): Promise<URL> {
     return Promise.resolve(
       new URL(
-        `?${randomString(Onefichier.FILE_PATH_CHAR_LENGTH)}`,
-        Onefichier.HOST_URL
+        `?${randomString(OneFichier.FILE_PATH_CHAR_LENGTH)}`,
+        OneFichier.HOST_URL
       )
     );
   }
@@ -38,7 +38,7 @@ export class Onefichier implements IHostWebsite {
       .then((response: AxiosResponse) => {
         const dom = new jsdom.JSDOM(response.data);
         return new DlFile(
-          Onefichier.HOST,
+          OneFichier.HOST,
           url,
           DlFileStatus.available,
           new Date(),
@@ -51,7 +51,7 @@ export class Onefichier implements IHostWebsite {
         if (result instanceof CrawdlError) {
           logger().debug(result.message);
           return new DlFile(
-            Onefichier.HOST,
+            OneFichier.HOST,
             url,
             DlFileStatus.extractFailure,
             new Date()
@@ -59,7 +59,7 @@ export class Onefichier implements IHostWebsite {
         } else {
           if (result.response?.status === 404) {
             return new DlFile(
-              Onefichier.HOST,
+              OneFichier.HOST,
               url,
               DlFileStatus.unavailable,
               new Date()
